@@ -34,19 +34,29 @@ done
 
 [ "$NEEDS_CONFIRM" = false ] && exit 0
 
-if [ ! -e /dev/tty ]; then
-  # TTYが取れない環境（バックグラウンド実行等）では安全側に倒して確認なしで通す
-  log_event "SKIPPED" "TTY取得不可のため確認ゲートをスキップ: $COMMAND"
+# /dev/tty はパスとして存在しても実際には開けないことがある（このツール実行環境など、
+# 制御端末を持たないプロセスの場合）。存在チェックだけでなく、実際の書き込みを試みて
+# 失敗したら安全側に倒して確認なしで通す。エラー出力はこのブロックの間だけ抑制し、
+# スクリプト全体のstderrには影響させない。
+if ! exec 3>/dev/tty; then
+  log_event "SKIPPED" "TTYオープン不可のため確認ゲートをスキップ: $COMMAND"
+  exit 0
+fi 2>/dev/null
+
+{
+  echo ""
+  echo "=== Claude Code: 確認が必要な操作 ==="
+  echo "コマンド: $COMMAND"
+  echo ""
+  printf "この操作を実行してよいですか？ [y/N]: "
+} >&3
+
+if ! read -r ANSWER <&3; then
+  exec 3>&-
+  log_event "SKIPPED" "TTY読み取り不可のため確認ゲートをスキップ: $COMMAND"
   exit 0
 fi
-
-echo "" > /dev/tty
-echo "=== Claude Code: 確認が必要な操作 ===" > /dev/tty
-echo "コマンド: $COMMAND" > /dev/tty
-echo "" > /dev/tty
-printf "この操作を実行してよいですか？ [y/N]: " > /dev/tty
-
-read -r ANSWER < /dev/tty
+exec 3>&-
 
 if [[ "$ANSWER" =~ ^[Yy]$ ]]; then
   echo "Confirm: ユーザーが承認しました" >&2
