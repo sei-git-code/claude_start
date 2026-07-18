@@ -42,13 +42,18 @@ genshijin / superpowers / dig / designer-skills / andrej-karpathy-skills の5つ
 Boris Cherny（Claude Code作者）流の運用を2ルールに凝縮したCLAUDE.mdスニペット。3ステップ以上のタスクはPlan Modeから始める／ユーザーの指摘を`tasks/lessons.md`に記録して次回に活かす。1つの塊として提示してよいが、2ルールどちらかだけの導入を希望されたら分けて確認する。
 
 ### 7. /commit-push-pr コマンド（`modules/commands/`）
-ステージング→コミット→push→PR作成を一括で行うカスタムスラッシュコマンド。`gh` CLIのインストールと`gh auth login`（対話操作、ユーザー自身が行う）が前提。
+ステージング→コミット→push→PR作成を一括で行うカスタムスラッシュコマンド。`gh` CLIのインストールと`gh auth login`（対話操作、ユーザー自身が行う。素のcmd.exe/PowerShellで実行すること。Claude Codeの`!`プレフィックス経由の疑似端末では矢印キー選択やブラウザ待ちが固まることがある）が前提。
+
+### 8. Context7 MCP（`modules/mcp-context7/`）
+最新のライブラリ/フレームワークドキュメントをオンデマンドで取得するMCPサーバー。Node.js（`modules/nodejs/`）が前提。他の項目と競合しない汎用ツール。
 
 ### 参考情報のみ（未導入・ファイルなし、reference/ 配下に理由と入手先を記載）
 - AWS コスト削減 Skill（`reference/aws-cost-report-skill.md`）— AWS利用者向け。IAMユーザー作成が前提のため要判断。
 - melta-ui（`reference/melta-ui.md`）— AI/人間可読なデザインシステムのMCP。具体的なUIプロジェクトができてから。
 - ComfyUIスプライト量産パイプライン（`reference/comfyui-sprite-pipeline.md`）— Claude Codeの設定ではなく技術ノウハウの記録。
 - 8BitDo Micro 音声入力（`reference/8bitdo-voice-input.md`）— ハードウェア購入判断が必要、macOS前提。
+- claude-mem（`reference/claude-mem.md`）— 永続記憶プラグイン。標準の自動メモリ・手動メモリシステムと役割が重なるため見送り。
+- 出力スタイル・サブエージェント入れ子・キュレーションリスト（`reference/advanced-features-2026.md`）
 
 ## 更新履歴の残し方
 このリポジトリに項目を追加・変更したときは、このCLAUDE.mdのカタログにも追記し、対応するモジュールディレクトリを作ること。カタログとファイルの実体が食い違わないようにする。
