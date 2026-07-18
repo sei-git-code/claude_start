@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(sudo rm*)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(chmod 777*)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | bash)",
+      "Bash(eval*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/guard-dangerous-bash.sh" },
+          { "type": "command", "command": "bash ~/.claude/hooks/confirm-irreversible.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/scan-staged-secrets.sh" }
+        ]
+      }
+    ]
+  }
+}
