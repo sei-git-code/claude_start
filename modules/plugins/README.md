@@ -1,6 +1,6 @@
 # プラグイン
 
-4つの独立したプラグイン。それぞれ個別に導入可否を確認すること。
+5つの独立したプラグイン。それぞれ個別に導入可否を確認すること。
 
 ## genshijin
 日本語応答の敬語・クッション言葉を削減し、トークンを約75〜80%削減する（技術情報は保持）。PR圧縮・コミットメッセージ生成の補助機能もある。
@@ -31,6 +31,13 @@ note.com/isaot の「実際のデザインプロセスに従う7つのClaude Cod
 ```bash
 claude plugin marketplace add julianoczkowski/designer-skills
 claude plugin install designer-skills@designer-skills
+```
+
+## andrej-karpathy-skills
+Andrej Karpathy氏のLLMコーディングの落とし穴に関する指摘を、Forrest Chang氏が4原則に凝縮した軽量CLAUDE.md（GitHubで10万スター超）。Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution。過度な実装や既存コードへの余計な手出しを抑える内容で、他のプラグインと目的が重ならないため併存できる。
+```bash
+claude plugin marketplace add forrestchang/andrej-karpathy-skills
+claude plugin install andrej-karpathy-skills@karpathy-skills
 ```
 
 ## 動作確認
