@@ -47,6 +47,11 @@ Boris Cherny（Claude Code作者）流の運用を2ルールに凝縮したCLAUD
 ### 8. Context7 MCP（`modules/mcp-context7/`）
 最新のライブラリ/フレームワークドキュメントをオンデマンドで取得するMCPサーバー。Node.js（`modules/nodejs/`）が前提。他の項目と競合しない汎用ツール。
 
+### 9. Unity開発関連（`modules/unity/`）
+2つの独立した要素。個別に確認する。
+- **unity-coding-skills**（nowsprinting開発）: Unity C#のTDDワークフロー用プラグイン。9スキル+3サブエージェント。今すぐ導入可能
+- **Unity MCP**（CoplayDev/unity-mcp）: Unity Editorと直接連携するMCP。Python 3.10+/uvが前提（インストール手順あり）。**ただしUnity Editor自体のインストールと、Unity内メニューでの接続設定（Configure All Detected Clients）が必須**。実際のUnityプロジェクトができてから完了させる
+
 ### 参考情報のみ（未導入・ファイルなし、reference/ 配下に理由と入手先を記載）
 - AWS コスト削減 Skill（`reference/aws-cost-report-skill.md`）— AWS利用者向け。IAMユーザー作成が前提のため要判断。
 - melta-ui（`reference/melta-ui.md`）— AI/人間可読なデザインシステムのMCP。具体的なUIプロジェクトができてから。
