@@ -52,6 +52,11 @@ Boris Cherny（Claude Code作者）流の運用を2ルールに凝縮したCLAUD
 - **unity-coding-skills**（nowsprinting開発）: Unity C#のTDDワークフロー用プラグイン。9スキル+3サブエージェント。今すぐ導入可能
 - **Unity MCP**（CoplayDev/unity-mcp）: Unity Editorと直接連携するMCP。Python 3.10+/uvが前提（インストール手順あり）。**ただしUnity Editor自体のインストールと、Unity内メニューでの接続設定（Configure All Detected Clients）が必須**。実際のUnityプロジェクトができてから完了させる
 
+### 10. サンドボックス反映（`modules/sandbox/`）
+このカタログを別マシン・コンテナ・VM等の別環境に持ち込む際の手順書。カタログ本体の1項目ではなく、カタログ全体を別環境へ展開するための補助資料なので、提示時は他項目と並べて「導入するか」を聞く対象にはしない（ユーザーがサンドボックス反映を依頼したときに参照する）。
+- `SETUP.md`: 対話操作できる環境・できない環境それぞれの反映手順
+- `INITIAL_PROMPT.md`: 対話操作できないサンドボックスで`claude`セッション開始時に渡す、各カタログ項目のyes/no事前回答テンプレート
+
 ### 参考情報のみ（未導入・ファイルなし、reference/ 配下に理由と入手先を記載）
 - AWS コスト削減 Skill（`reference/aws-cost-report-skill.md`）— AWS利用者向け。IAMユーザー作成が前提のため要判断。
 - melta-ui（`reference/melta-ui.md`）— AI/人間可読なデザインシステムのMCP。具体的なUIプロジェクトができてから。
