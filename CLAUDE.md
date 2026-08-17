@@ -64,6 +64,7 @@ Boris Cherny（Claude Code作者）流の運用を2ルールに凝縮したCLAUD
 - 8BitDo Micro 音声入力（`reference/8bitdo-voice-input.md`）— ハードウェア購入判断が必要、macOS前提。
 - claude-mem（`reference/claude-mem.md`）— 永続記憶プラグイン。標準の自動メモリ・手動メモリシステムと役割が重なるため見送り。
 - 出力スタイル・サブエージェント入れ子・キュレーションリスト（`reference/advanced-features-2026.md`）
+- Claude Code月次サーベイ（`reference/claude-code-monthly-survey.md`）— 新機能・Opus系モデル最適化設定を毎月調査したログ。月次クラウドルーティンで自動更新（`modules/monthly-survey-routine/README.md`参照）
 
 ## 更新履歴の残し方
 このリポジトリに項目を追加・変更したときは、このCLAUDE.mdのカタログにも追記し、対応するモジュールディレクトリを作ること。カタログとファイルの実体が食い違わないようにする。
