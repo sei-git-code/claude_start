@@ -57,6 +57,30 @@ Boris Cherny（Claude Code作者）流の運用を2ルールに凝縮したCLAUD
 - `SETUP.md`: 対話操作できる環境・できない環境それぞれの反映手順
 - `INITIAL_PROMPT.md`: 対話操作できないサンドボックスで`claude`セッション開始時に渡す、各カタログ項目のyes/no事前回答テンプレート
 
+### 11. e2bクラウドサンドボックス（`modules/e2b-sandbox/`）
+e2b.dev上のクラウドサンドボックスでClaude Codeを動かす。`modules/sandbox/`（このカタログの反映手順）とは別軸で、e2bは反映先候補になり得るクラウドサンドボックス提供元の1つという位置づけ。
+- 対話ログインモードのみ対応（サンドボックス内`claude`起動→通常のClaude.ai/Maxサブスクでログイン）。ANTHROPIC_API_KEYによるヘッドレス自動化は追加API従量課金が発生するため未導入
+- 前提: Node.js（`modules/nodejs/`）、e2b.devアカウント・API key発行（本人操作必須、Claude代行不可）
+- e2b利用料自体は従量課金（無料枠$100クレジットあり）。使用後は`e2b sbx kill`を忘れずに
+
+### 12. Gemini 3.5 Transcribe 音声入力（`modules/voice-input-gemini/`）
+GoogleのGemini 3.5 Transcribe（フィラーワード自動除去のsmart transcriptionモード）でマイク音声を文字起こしし、Claude Codeのターミナルに自動タイプ入力＋Enter送信する。`reference/8bitdo-voice-input.md`（物理コントローラー＋OS標準Dictation、未導入）とは別アプローチ、ハードウェア不要。
+- 前提: Python、Google AI Studio APIキー発行（本人操作必須）
+- 無料ティア利用時は送信内容がGoogle製品改善に利用され得る点に注意
+- ライブラリ導入・import確認は済み。実マイクでのend-to-end動作確認は未（APIキー発行後にユーザー環境で実施）
+
+### 13. Docker Sandboxes（`modules/docker-sandbox/`）
+ローカルPC上のmicroVM（専用カーネル＋専用Dockerデーモン）でClaude Codeを隔離実行する。`e2b-sandbox`（クラウド側）に対するローカル側の隔離手段。コマンドは旧`docker sandbox`ではなく独立CLI `sbx`（`sbx run claude <dir>`）。
+- 前提: Windows 11 + Windows Hypervisor Platform有効化、Dockerアカウント（`sbx login`は本人操作）
+- 導入: `winget install -h Docker.sbx`（パッケージ存在は確認済み）。**未インストール・起動の実機確認は未**
+- 注意: サンドボックス内では`--dangerously-skip-permissions`が既定で有効、ホストの`~/.claude`（hook・CLAUDE.md）は引き継がれない。隔離境界が唯一の防御
+
+### 14. Herdr（`modules/herdr/`）
+Claude Code等のAIエージェントを複数並べて管理するターミナル多重化ツール（状態サイドバー・セッション永続化・worktree連携）。公式サイト herdr.dev。
+- 導入: 公式の`irm ... | iex`ではなく、`install.ps1`をダウンロード→中身確認→実行（README参照）。ユーザー領域インストール、管理者権限不要
+- Windows版はベータ。`herdr --version`/`herdr status`は確認済み、実際のペイン操作・エージェント検出は未確認
+- 自動モードが`-ExecutionPolicy Bypass`実行を拒否する場合は`!`プレフィックスでユーザー自身が実行
+
 ### 参考情報のみ（未導入・ファイルなし、reference/ 配下に理由と入手先を記載）
 - AWS コスト削減 Skill（`reference/aws-cost-report-skill.md`）— AWS利用者向け。IAMユーザー作成が前提のため要判断。
 - melta-ui（`reference/melta-ui.md`）— AI/人間可読なデザインシステムのMCP。具体的なUIプロジェクトができてから。
@@ -65,6 +89,7 @@ Boris Cherny（Claude Code作者）流の運用を2ルールに凝縮したCLAUD
 - claude-mem（`reference/claude-mem.md`）— 永続記憶プラグイン。標準の自動メモリ・手動メモリシステムと役割が重なるため見送り。
 - 出力スタイル・サブエージェント入れ子・キュレーションリスト（`reference/advanced-features-2026.md`）
 - Claude Code月次サーベイ（`reference/claude-code-monthly-survey.md`）— 新機能・Opus系モデル最適化設定を毎月調査したログ。月次クラウドルーティンで自動更新（`modules/monthly-survey-routine/README.md`参照）
+- AIエージェント運用テンプレート集（`reference/ai-agent-task-management-templates.md`）— CLAUDE.md規約例・task-list.mdテンプレート・複数AI役割分担の考え方。具体的な導入手順を伴わない運用方針中心のためファイルなし
 
 ## 更新履歴の残し方
 このリポジトリに項目を追加・変更したときは、このCLAUDE.mdのカタログにも追記し、対応するモジュールディレクトリを作ること。カタログとファイルの実体が食い違わないようにする。
