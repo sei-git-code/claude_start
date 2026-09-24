@@ -55,7 +55,7 @@ Zedのターミナルパネルを開くと自動でherdrが起動するように
 - フルパス指定なのでPATH未反映でも動く。herdr終了後は`-NoExit`で通常のPowerShellに戻る
 - Zedのターミナルは新規タブも毎回herdrで起動する。普通のシェルが要るときはherdr内で分割するか、この設定を外す
 - 編集前に `settings.json` をバックアップしておくこと
-- **Zed上での実際の起動確認は未**（設定の追記のみ）
+- Zedのターミナルパネルでherdrが起動することは確認済み。ペイン分割・エージェント状態表示などの実操作は未確認
 
 ### 参考にしたが使えないもの
 - [zerdr](https://github.com/ryonakae/zerdr)（Zed Terminal ThreadsとHerdrタブの自動紐付け、`zerdr connect`等）: **macOS/Linux専用**。SSH・WSL・コンテナでも実行拒否されるため、Windowsでは使えない。導入は`brew install ryonakae/tap/zerdr`または`cargo install --git`
