@@ -1,0 +1,14 @@
+# 環境変数・シークレット
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# 認証情報ファイル
+.aws/credentials
+.ssh/
+*.token

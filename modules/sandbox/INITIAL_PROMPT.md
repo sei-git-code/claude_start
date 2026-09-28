@@ -29,5 +29,13 @@
 9. Unity開発関連
    - unity-coding-skills: [ ]
    - Unity MCP: [ ]（通常はUnity Editor未セットアップのためno推奨）
+10. Herdr: [ ]（前提: Windowsはベータ。macOS/Linuxなら安定版）
+11. e2bクラウドサンドボックス: [ ]（前提: Node.js、e2b.devアカウント・API key発行は本人操作必須のため、未発行ならno推奨）
+12. Gemini 3.5 Transcribe 音声入力: [ ]（前提: Python、Google AI Studio APIキー発行は本人操作必須。マイクを使うため非対話サンドボックスではno推奨）
+13. Docker Sandboxes: [ ]（前提: Windows 11 + Windows Hypervisor Platform、Dockerアカウントは本人操作必須）
 
 導入完了後、何を適用し何をスキップしたか一覧で報告してください。
+
+---
+
+**注記**: この列挙はCLAUDE.mdのカタログ項目1〜13の複製であり、カタログ側に新項目が増えるたびに手動で追従が要る（自動で同期されない）。カタログを更新したら、このテンプレートの項目番号もあわせて見直すこと。
