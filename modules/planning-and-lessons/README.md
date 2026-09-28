@@ -14,3 +14,5 @@ Cherny氏のCLAUDE.mdは驚くほど短い（約100行・2.5kトークン）。�
 ## 関連（未導入）
 - `/commit-push-pr` カスタムコマンド（`../commands/commit-push-pr.md`）
 - 10〜15並列セッション運用、`isolation: worktree` — このリポジトリには含めていない。必要になったら公式ドキュメントの sub-agents / agent-view を参照
+- `/btw`（作業中に割り込みで質問。履歴を汚さず、作業を止めない。2026-03導入） — このリポジトリのルールと直接は重ならないが、Plan Mode運用と組み合わせると相性がよい。未導入（CLAUDE.mdルール化するような設定ではなく、単体のビルトインコマンドのため）
+- git worktree 3〜5本を同時に開き、それぞれ別のClaude Codeセッションを走らせる運用（Cherny氏が「最大の生産性向上」と紹介） — 上記の10〜15並列運用と同系統。`superpowers:using-git-worktrees` skillが同種の機能を提供済みのため、このリポジトリへの追加モジュール化はしない

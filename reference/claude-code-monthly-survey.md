@@ -28,6 +28,10 @@ Claude Code新機能・Opus系モデル最適化設定を毎月調査した記�
 - skillのfrontmatterに `context: fork` を付けると、skill本文がsubagentへのプロンプトになりメインの会話コンテキストを消費しない
 - 出典: [Daniel San](https://x.com/dani_avila7/status/2009620498573873379)、[Eric Buess](https://x.com/EricBuess/status/2009073718450889209)
 
+### C-2. Sonnet 5.5 / Haiku 5.5（予告のみ）
+
+Opus 5.5と同時に「数週間以内に続く」と予告されている。詳細未発表のため続報待ち。
+
 ### D. 調査に使った情報源（定点観測先）
 
 - 公式変更履歴: [code.claude.com/docs/en/whats-new](https://code.claude.com/docs/en/whats-new)（週次まとめ、日本語版は`/docs/ja/whats-new`）、[changelog](https://code.claude.com/docs/en/changelog)（全変更）
