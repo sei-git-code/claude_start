@@ -6,6 +6,8 @@ Claude Code / Codex / OpenCode などのターミナル系AIエージェント�
 
 **Windows版はベータ**（安定版はLinux/macOS）。
 
+herdrで並べたClaude Codeセッション同士は、herdrのペイン管理とは別に、Claude Code標準の`ListAgents`/`SendMessage`（セッション間メッセージング）でも直接やり取りできる（2026-08〜のバージョンで追加）。herdrはペインの可視化・永続化、`ListAgents`/`SendMessage`はセッション間の通信、と役割が分かれる。
+
 ## 導入（Windows）
 
 公式の案内は `irm https://herdr.dev/install.ps1 | iex` だが、このカタログはパイプ実行を避ける方針のため、**ダウンロード→中身確認→実行**の順で行う。

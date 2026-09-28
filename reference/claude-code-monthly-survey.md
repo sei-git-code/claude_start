@@ -28,6 +28,12 @@ Claude Code新機能・Opus系モデル最適化設定を毎月調査した記�
 - skillのfrontmatterに `context: fork` を付けると、skill本文がsubagentへのプロンプトになりメインの会話コンテキストを消費しない
 - 出典: [Daniel San](https://x.com/dani_avila7/status/2009620498573873379)、[Eric Buess](https://x.com/EricBuess/status/2009073718450889209)
 
+### D. 調査に使った情報源（定点観測先）
+
+- 公式変更履歴: [code.claude.com/docs/en/whats-new](https://code.claude.com/docs/en/whats-new)（週次まとめ、日本語版は`/docs/ja/whats-new`）、[changelog](https://code.claude.com/docs/en/changelog)（全変更）
+- 非公式まとめ: [Claude Code Changelog（X: @ClaudeCodeLog）](https://x.com/ClaudeCodeLog)、[gradually.ai](https://www.gradually.ai/en/changelogs/claude-code/)、[Releasebot](https://releasebot.io/updates/anthropic/claude-code)、[Havoptic](https://www.havoptic.com/tools/claude-code)
+- X検索は `WebSearch` に `allowed_domains: ["x.com", "twitter.com"]` を指定すると可能（本文は取得不可、スニペットのみ）
+
 ### 判断
 
 今回も全項目見送り。Opus 5.5への切替、Projects活用は、実際に必要になった時点で再検討する。
