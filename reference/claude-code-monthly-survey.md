@@ -2,6 +2,39 @@
 
 Claude Code新機能・Opus系モデル最適化設定を毎月調査した記録。導入判断は都度見送ってよく、ここには結果だけ残す。新しい月の調査結果は、このファイルの一番上（このすぐ下）に追記していく。
 
+## 2026-10 調査分
+
+出典: 公式ドキュメント（[code.claude.com/docs/en/whats-new](https://code.claude.com/docs/en/whats-new)、[changelog](https://code.claude.com/docs/en/changelog)、[model-config](https://code.claude.com/docs/en/model-config)）を直接確認。一部は非公式まとめサイトのWebSearchスニペットで補足したが、本文までは精読していない。
+
+### A. 新機能候補（このリポジトリのカタログには未収録）
+
+1. **Claude Sonnet 5.5**（2026-09-28リリース、v2.1.284） — Sonnet 5の後継。1Mトークンコンテキスト対応、料金は入力$2/出力$10 per Mtok（キャッシュ読み出し$0.20/Mtok）、Sonnet 5比で約30%高速。現状このリポジトリは特定モデルの導入手順をカタログ化していないため、新規モジュールの対象にはしない。
+2. **`maxEffortLevel`設定**（v2.1.267、Week 37: 2026-09-07〜11） — `~/.claude/settings.json`等のトップレベルまたは`modelSettings`配下でeffortレベルの上限キャップを設定できる。開発者や環境変数が上限より高いeffortを要求しても、設定した上限にクランプされる。Amazon Bedrock/Google Cloud Agent Platform/Microsoft Foundry含む全プロバイダで有効。個人用途では`effortLevel`を直接指定する方が単純なため、今は参考情報止まり。
+3. **`claude --desktop`コマンド／`claude plugin configure`／`allowedProviders`管理設定**（v2.1.285、2026-09-29） — それぞれCLIからデスクトップアプリを開く、プラグインの設定値を表示・保存する、組織管理者がAPIプロバイダを制限する機能。個人環境では`allowedProviders`は対象外、他2つも現時点で使う場面なし。
+4. **`/doctor prompt-audit`**（v2.1.283、2026-09-25） — CLAUDE.mdを監査するコマンド。このリポジトリでは`stock/分別タスク.md`記載の通り既に一度試用済み（コミット`27a7123`）だが、独立したカタログ項目としてはまだ起こしていない。次回整理時に`modules/`化するか判断する。
+5. **WebFetchの5分デッドライン**（Week 37） — ページのダウンロードが5分以内に終わらないと失敗するよう変更。`CLAUDE_CODE_WEBFETCH_DEADLINE_MS`で変更可。カタログ化不要な挙動変更。
+6. **Claude Code Desktopのパネルをポップアウト**（Week 37） — diff/terminalパネルを別ウィンドウに切り出し可能。Desktopアプリ限定でこのCLIカタログの対象外。
+
+出典: [Week 37 digest](https://code.claude.com/docs/en/whats-new/2026-w37)、[changelog v2.1.281-286](https://code.claude.com/docs/en/changelog)、[Thurrott: Sonnet 5.5](https://www.thurrott.com/a-i/anthropic/342139/anthropic-releases-claude-sonnet-5-5)
+
+### B. 最新モデルの最適化設定・デフォルト変化
+
+公式[model-config](https://code.claude.com/docs/en/model-config)ドキュメントで確認した現在の値：
+
+- **デフォルトモデル**: Pro・Max・Team・Enterprise・Anthropic APIはいずれも既定で**Opus 5.5**（Claude Platform on AWS/Amazon Bedrock/Google Cloud Agent Platformも同様）。Microsoft FoundryのみSonnet 4.5が既定。先月時点では「Pro/Max/Teamで既定Opusモデルになる」という情報のみだったが、今回の確認でPro含む全プラン共通でOpus既定であることを公式記載で確定。
+- **effortレベルの既定値**: Opus 5.5・Sonnet 5.5は**medium**、Opus 4.7は**xhigh**、それ以外のサポート対象モデルは**high**が既定。先月の「Opus 5.5のeffort既定はmedium」という情報と一致。
+- **`maxEffortLevel`**（上記A-2）はeffortの「上限キャップ」を新設したもので、デフォルト値自体の変更ではない。
+- **Fast mode**: 公式ドキュメント上、Fast Mode固有のeffortデフォルトに関する明示的な記載は見当たらなかった。`/fast`コマンドでOpusモデルへの暗黙切り替えを試みる挙動は従来通り。
+- 現状 `~/.claude/settings.json` は `"model": "sonnet"` 固定のため、上記のPro既定Opus化・effort既定medium化のいずれも直接の影響はない（参考情報として記録するのみ）。
+
+出典: [model-config](https://code.claude.com/docs/en/model-config)、[mixed-news: Claude Code default model Opus](https://mixed-news.com/en/claude-code-default-model-opus-pro-team-standard-plans/)
+
+### 判断
+
+今回も調査記録のみで、カタログへの正式な機能追加やmodules/配下への実装は行わない。Sonnet 5.5への切替・`maxEffortLevel`の設定・`/doctor prompt-audit`の正式カタログ化は、実際に必要になった時点、またはストック整理のタイミングで再検討する。
+
+---
+
 ## 2026-09 調査分
 
 出典: `stock/ストック.md` S-05・S-12・S-19・S-28（note/Zenn/X/公式ドキュメントを検索して収集、いずれも本文精読はしていない未検証情報）。
