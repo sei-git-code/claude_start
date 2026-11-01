@@ -2,6 +2,35 @@
 
 Claude Code新機能・Opus系モデル最適化設定を毎月調査した記録。導入判断は都度見送ってよく、ここには結果だけ残す。新しい月の調査結果は、このファイルの一番上（このすぐ下）に追記していく。
 
+## 2026-11 調査分
+
+出典: 公式 [changelog](https://code.claude.com/docs/en/changelog)（v2.1.292〜v2.1.316、2026-10-06〜10-31分を精読）、公式 [whats-new](https://code.claude.com/docs/en/whats-new)（Week 37=9/7〜11が最新掲載で、Week 38以降は目次に掲載なし＝週次ダイジェスト形式が更新されていない可能性）。非公式情報（[havoptic.com](https://www.havoptic.com/releases/claude-code/2026/10)等）は項目ごとに注記のうえ参考程度に留めた。
+
+### A. 新機能候補（このリポジトリのカタログには未収録）
+
+1. **`permissions.blockWritesOutsideWorkingDirectories`**（v2.1.314, 10/30） — 有効にするとWrite/Edit/NotebookEditが作業ディレクトリ外へのパスをどの権限モードでも拒否するようになる。`modules/security-guardrails`の「最小権限permissions」と同系統の設定項目として候補になりうる。
+2. **`/auto-mode-setup`**（v2.1.304, 10/19） — プロジェクトと直近セッションを読んでauto modeの挙動をガイド付きで設定するコマンド。auto modeは8/14からPro/Max/Teamで既定の権限モードになっている（2026-08サーベイ既出）が、その設定支援コマンドは新規。
+3. **Hookの`onFailure: "block"`**（v2.1.295, 10/8） — command/HTTP hookが起動失敗・タイムアウト・異常終了した際に、素通りさせず操作をブロックする指定。`modules/security-guardrails`のhook群（危険Bashコマンド遮断等）を導入済みなら、hook自体がクラッシュした場合のフェイルセーフとして関連する。
+4. **アイドル時の自動コンパクション**（v2.1.299, 10/14） — 20万トークン超の会話が約54分アイドルすると、1時間のプロンプトキャッシュが切れる前に自動要約される（`idleCompaction`設定、`CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`で閾値変更可）。長時間アイドルしがちな運用（本リポジトリのクラウドルーティン群）に関係する可能性があるが、キャッシュ切れ対策として自動で働くものなので対応不要。
+5. **Agent toolの`effort`パラメータ**（v2.1.292, 10/6） — サブエージェントごとに実行effortレベルを指定可能になった。本サーベイ自身を実行している今回のAgent toolにも`effort`パラメータが存在し、実際に機能していることを確認した。
+6. **`CLAUDE_CODE_SUBAGENT_EFFORT`環境変数**（v2.1.316, 10/31） — 個別指定がない場合のサブエージェント既定effortを設定できる（未指定時はセッションのeffortを継承）。
+7. Mods（プラグインがClaude Code自体のUI・挙動を拡張する仕組み）の継続拡充 — `virtualText`、`prompt.change`フック、`$.ui.notify`等が10月中に次々追加されている。本リポジトリに自作プラグイン/modはまだ無いため即時適用先はないが、`modules/plugins`に将来modベースのプラグインを追加する際の前提知識になる。
+
+### B. 最新モデルの最適化設定・デフォルト変化（個々のユーザー設定ではなくClaude Code全体の既定・挙動）
+
+- **Claude Haiku 5.5**（`claude-haiku-5-5`、v2.1.293, 10/7）がAnthropic APIの既定Haikuモデルになった。1Mコンテキスト窓、$0.10/$0.50 per MTok（10万トークン超のプロンプトは$0.50/$2.50）。
+- **Sonnet 5.5**が実運用で確認された（v2.1.296, 10/9でキャッシュ読み出し価格が$0.20→$0.10/MTokに変更）。2026-09時点では「予告のみ」だったが、10月中に実際にリリース・値下げが行われている。
+- **Fast modeがOpus 4.8で非推奨化**（2026-10-30非推奨、2026-11-30廃止予定、v2.1.316） — 廃止後はOpus 4.8でのfast modeリクエストはエラーになり標準Opus 4.8へのフォールバックもしない。公式changelogはOpus 5.5への移行を推奨している。
+- **`ultrathink`キーワードの挙動変更**（v2.1.311, 10/26） — ターミナルで`ultrathink`と打つとOpus 5.5 / Sonnet 5.5 / Haiku 5.5 / Fable 5.1（Anthropic API経由）でそのターンがxhigh effortで実行されるようになった。`CLAUDE_CODE_DISABLE_ULTRATHINK`で無効化可能（v2.1.316）。
+- モデル名の`[1m]`サフィックスは、効果がない場面では表示上省略されるようになった（受理は継続、v2.1.311）。
+- Claude Opus 6については、一部の非公式記事（tech-insider等）が「10月第3週に出るとの未確認の噂」を報じているのみで、Anthropic公式の発表・モデルカード・料金ページは確認できなかった（2026-11-01時点、WebSearchで `site:anthropic.com` を含めて確認）。**未確認情報として記録するのみ**。
+
+### 判断（今回は調査記録のみで自動導入はしない）
+
+上記はいずれも調査記録であり、本リポジトリのカタログ・`modules/`配下への実装は行っていない。`permissions.blockWritesOutsideWorkingDirectories`とhookの`onFailure: "block"`は`security-guardrails`との関連が深いため、次回ユーザーと確認する際の候補として記録した。Fast mode廃止（Opus 4.8→Opus 5.5移行）はこのリポジトリの設定ファイルには影響しないが、Opus系モデルを使う場合の既知情報として残す。
+
+---
+
 ## 2026-09 調査分
 
 出典: `stock/ストック.md` S-05・S-12・S-19・S-28（note/Zenn/X/公式ドキュメントを検索して収集、いずれも本文精読はしていない未検証情報）。
