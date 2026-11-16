@@ -80,6 +80,7 @@ Claude Code等のAIエージェントを複数並べて管理するターミナ�
 - 導入: 公式の`irm ... | iex`ではなく、`install.ps1`をダウンロード→中身確認→実行（README参照）。ユーザー領域インストール、管理者権限不要
 - Windows版はベータ。`herdr --version`/`herdr status`は確認済み、実際のペイン操作・エージェント検出は未確認
 - 自動モードが`-ExecutionPolicy Bypass`実行を拒否する場合は`!`プレフィックスでユーザー自身が実行
+- **「Herdr」には別々の2製品がある**（standalone TUI版と、実際に使っているDesktop App版）。Desktop App版（`herdr-app` + `hc`）は2026-11にペイン操作・エージェント検出・他エージェントへのタスク委譲まで動作確認済み。詳細は`modules/herdr/README.md`の「Desktop App版（herdr-app）」セクション参照
 
 ### 参考情報のみ（未導入・ファイルなし、reference/ 配下に理由と入手先を記載）
 - AWS コスト削減 Skill（`reference/aws-cost-report-skill.md`）— AWS利用者向け。IAMユーザー作成が前提のため要判断。
