@@ -2,6 +2,49 @@
 
 Claude Code新機能・Opus系モデル最適化設定を毎月調査した記録。導入判断は都度見送ってよく、ここには結果だけ残す。新しい月の調査結果は、このファイルの一番上（このすぐ下）に追記していく。
 
+## 2026-10〜11 調査分
+
+出典: 公式 [code.claude.com/docs/en/changelog](https://code.claude.com/docs/en/changelog)、[whats-new](https://code.claude.com/docs/en/whats-new)（本文直接確認、2026-09調査分と違い未検証の記事経由ではない）。
+
+### A. サンドボックス内Bashの既定挙動変更（v2.1.325, 2026-11-13）
+- sandboxed Bashコマンドが、通常の権限確認フローに従うよう変更された（以前は無確認で実行されていた）
+- 無確認のまま維持したい場合は、最上位のmanaged設定で`sandbox.autoAllowBashIfSandboxed: true`を設定する
+- `modules/security-guardrails`（危険Bash遮断hook等）と関連する変更。現状このリポジトリはsandbox機能自体を使っていないため直接の影響は無いが、将来sandbox導入時に要確認
+
+### B. スケジュールタスク/`/loop`がskill実行前に確認を挟むよう変更（同バージョン帯）
+- `allowed-tools`やhooksを宣言したskillを無人実行（スケジュール/`/loop`）する前に、確認が入るようになった
+- 無人実行を継続したい場合は`permissions.allow`に`Skill(name)`を追加する
+- `modules/ping-routine`（毎朝7時の自動ping）や月次サーベイの自動化ルーティンに影響する可能性。該当routineを使うタイミングで要確認
+
+### C. プラグインにバージョン制約（`engines["claude-code"]`）が追加（v2.1.323, 2026-11-12）
+- `plugin.json`に`engines["claude-code"]`を書くと、対応バージョン範囲外のClaude Codeでは当該プラグインがインストール・更新・ロードされなくなる
+- 既存導入済みプラグイン（genshijin/superpowers/dig/designer-skills/karpathy-skills）がこの制約を将来的に宣言する可能性がある。現時点で不具合は出ていないが、`claude update`後に動かなくなったら要確認ポイントとして記録
+
+### D. Code Mode（v2.1.323, 2026-11-12、実験的opt-in）
+- ClaudeがツールをJavaScript経由で呼び出す実験的モード。詳細: https://code.claude.com/docs/en/code-mode
+- 既存ワークフローへの影響は無いopt-in機能。今回は様子見
+
+### E. Claude Fable 5.2（v2.1.321, 2026-11-09）
+- 新しい既定Fableモデル。1Mコンテキスト、$8/$40 per Mtok（キャッシュ読み出し$0.20/Mtok）
+- Antigravity CLI経由のリサーチ（2026-11-16実施）でも同じ情報が出ており、裏取り済み
+- 現状`~/.claude/settings.json`は`"model": "sonnet"`固定のため直接の影響は無し
+
+### F. Week 37（2026-09-07〜11、前回調査で見落とし）
+- `claude plugin eval`: プラグインをテストケース一式に対して実行・採点し、プラグイン無しのベースラインと比較できる。`claude plugin eval init`でケース雛形を生成
+- Claude Code DesktopのペインをPopoutして別ウィンドウ化、後で再ドッキング可能に
+- `maxEffortLevel`設定で全プロバイダ横断のeffort上限を設定可能に
+- `WebFetch`が5分以内にダウンロード完了しないページで、ハング停止せずエラーになるよう修正
+
+### G. 公式スキルマーケットプレイス `anthropics/skills`（導入済み）
+- Anthropic公式の文書編集スキル集。`document-skills/`配下にdocx/pdf/pptx等の作成・編集スキル（source-available、Claude本体の文書機能と同じ実体）
+- 2026-11-16、実際に導入・動作確認済み。詳細は`modules/plugins/README.md`の「document-skills（公式）」セクション参照
+- 他の「おすすめClaude Code skillランキング」記事（dev.to/composio.dev等多数）はSEO色が強く、具体的数値（スター数等）の信頼性が低いため裏取りを見送った。既存導入済みのsuperpowers/designer-skillsは複数記事で「鉄板」評価が一致しており、追加の裏付けとして記録するに留める
+
+### 判断
+A・Bは今後の要確認事項として記録。C・Dは様子見。E・Fは情報のみ。Gのみ実導入（`modules/plugins/README.md`に反映済み）。
+
+---
+
 ## 2026-09 調査分
 
 出典: `stock/ストック.md` S-05・S-12・S-19・S-28（note/Zenn/X/公式ドキュメントを検索して収集、いずれも本文精読はしていない未検証情報）。

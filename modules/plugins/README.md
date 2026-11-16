@@ -1,6 +1,6 @@
 # プラグイン
 
-5つの独立したプラグイン。それぞれ個別に導入可否を確認すること。
+6つの独立したプラグイン。それぞれ個別に導入可否を確認すること。
 
 ## genshijin
 日本語応答の敬語・クッション言葉を削減し、トークンを約75〜80%削減する（技術情報は保持）。PR圧縮・コミットメッセージ生成の補助機能もある。
@@ -39,6 +39,14 @@ Andrej Karpathy氏のLLMコーディングの落とし穴に関する指摘を�
 claude plugin marketplace add forrestchang/andrej-karpathy-skills
 claude plugin install andrej-karpathy-skills@karpathy-skills
 ```
+
+## document-skills（公式）
+Anthropic公式の文書編集スキル集（docx/pdf/pptx等の作成・編集）。`anthropics/skills`リポジトリの`document-skills/`配下、Claude本体の文書機能を支えているのと同じ実体（source-available）。
+```bash
+claude plugin marketplace add anthropics/skills
+claude plugin install document-skills@anthropic-agent-skills
+```
+2026-11、実際にインストール・有効化を確認済み（`claude plugin list`で`document-skills@anthropic-agent-skills`が`enabled`と表示）。
 
 ## 動作確認
 ```bash
